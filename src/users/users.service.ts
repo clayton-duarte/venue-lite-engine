@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { User, UserDocument } from './schemas/user.schema';
@@ -10,17 +10,26 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  create(createUserDto: CreateUserDto) {
-    const createUser = new this.userModel(createUserDto);
-    return createUser.save();
-  }
-
+  // TODO > remove
   findAll() {
     return this.userModel.find().exec();
   }
 
-  findOne(id: string) {
+  findOneByEmail(email: string) {
+    return this.userModel.findOne({ email }).exec();
+  }
+
+  findOneById(id: string) {
     return this.userModel.findOne({ _id: id }).exec();
+  }
+
+  async create(createUserDto: CreateUserDto) {
+    if ((await this.findOneByEmail(createUserDto.email)) != null) {
+      throw new HttpException('Email already registered', HttpStatus.CONFLICT);
+    } else {
+      const createUser = new this.userModel(createUserDto);
+      return createUser.save();
+    }
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
