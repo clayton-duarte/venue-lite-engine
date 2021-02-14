@@ -19,15 +19,15 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.userModel.findOne({ _id: id }).exec();
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(id: string, updateUserDto: UpdateUserDto) {
     return this.userModel.updateOne({ _id: id }, updateUserDto).exec();
   }
 
-  delete(id: number) {
+  delete(id: string) {
     return this.userModel.deleteOne({ _id: id }).exec();
   }
 }
