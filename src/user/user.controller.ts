@@ -12,10 +12,10 @@ import {
 import { Request } from 'express';
 
 import { PasswordInterceptor } from './interceptors/password.interceptor';
+import { SessionGuard } from '../app.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SignInUserDto } from './dto/signin-user.dto';
-import { SessionGuard } from '../guards/session.guard';
 import { UserService } from './user.service';
 
 @Controller('user')
