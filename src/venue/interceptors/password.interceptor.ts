@@ -7,7 +7,7 @@ import {
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { UserDocument } from '../schemas/user.schema';
+import { VenueDocument } from '../schemas/venue.schema';
 
 @Injectable()
 export class PasswordInterceptor implements NestInterceptor {
@@ -19,7 +19,7 @@ export class PasswordInterceptor implements NestInterceptor {
     email: string;
   }> {
     return next.handle().pipe(
-      map((doc: UserDocument) => {
+      map((doc: VenueDocument) => {
         return {
           id: doc.id,
           email: doc.email,

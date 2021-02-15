@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 
 import { MenuItemsModule } from './menu-items/menu-items.module';
-import { UserModule } from './user/user.module';
+import { VenueModule } from './venue/venue.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MenuGroupsModule } from './menu-groups/menu-groups.module';
@@ -17,7 +17,7 @@ import { MenuGroupsModule } from './menu-groups/menu-groups.module';
       useFindAndModify: false,
     }),
     MenuItemsModule,
-    UserModule,
+    VenueModule,
     MenuGroupsModule,
   ],
   controllers: [AppController],

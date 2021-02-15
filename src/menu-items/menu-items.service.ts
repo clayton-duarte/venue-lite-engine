@@ -21,8 +21,8 @@ export class MenuItemsService {
   }
 
   create(createMenuItemDto: CreateMenuItemDto) {
-    const createUser = new this.menuItemModel(createMenuItemDto);
-    return createUser.save();
+    const createMenuItem = new this.menuItemModel(createMenuItemDto);
+    return createMenuItem.save();
   }
 
   update(id: string, updateMenuItemDto: UpdateMenuItemDto) {

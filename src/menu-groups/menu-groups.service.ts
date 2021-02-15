@@ -22,8 +22,8 @@ export class MenuGroupsService {
   }
 
   create(createMenuGroupDto: CreateMenuGroupDto) {
-    const createUser = new this.menuGroupModel(createMenuGroupDto);
-    return createUser.save();
+    const createMenuGroup = new this.menuGroupModel(createMenuGroupDto);
+    return createMenuGroup.save();
   }
 
   update(id: string, updateMenuGroupDto: UpdateMenuGroupDto) {
