@@ -12,8 +12,8 @@ import {
 import { FormatCurrencyPipe } from './pipes/format-currency.pipe';
 import { CreateMenuItemDto } from './dto/create-menu-item.dto';
 import { UpdateMenuItemDto } from './dto/update-menu-item.dto';
+import { SessionGuard } from '../../guards/session.guard';
 import { MenuItemsService } from './menu-items.service';
-import { SessionGuard } from '../app.guard';
 
 @Controller('menu-items')
 @UseGuards(SessionGuard)

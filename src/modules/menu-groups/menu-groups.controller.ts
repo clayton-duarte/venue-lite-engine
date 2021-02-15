@@ -12,7 +12,7 @@ import {
 import { CreateMenuGroupDto } from './dto/create-menu-group.dto';
 import { UpdateMenuGroupDto } from './dto/update-menu-group.dto';
 import { MenuGroupsService } from './menu-groups.service';
-import { SessionGuard } from '../app.guard';
+import { SessionGuard } from '../../guards/session.guard';
 
 @Controller('menu-groups')
 @UseGuards(SessionGuard)

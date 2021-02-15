@@ -17,7 +17,7 @@ import { CreateVenueDto } from './dto/create-venue.dto';
 import { UpdateVenueDto } from './dto/update-venue.dto';
 import { SignInVenueDto } from './dto/signin-venue.dto';
 import { VenueService } from './venue.service';
-import { SessionGuard } from '../app.guard';
+import { SessionGuard } from '../../guards/session.guard';
 
 @Controller('venue')
 @UseInterceptors(PasswordInterceptor)
