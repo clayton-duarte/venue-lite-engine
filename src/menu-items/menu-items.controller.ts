@@ -1,5 +1,6 @@
 import {
   Controller,
+  UseGuards,
   Delete,
   Param,
   Post,
@@ -12,8 +13,10 @@ import { FormatCurrencyPipe } from './pipes/format-currency.pipe';
 import { CreateMenuItemDto } from './dto/create-menu-item.dto';
 import { UpdateMenuItemDto } from './dto/update-menu-item.dto';
 import { MenuItemsService } from './menu-items.service';
+import { SessionGuard } from '../guards/session.guard';
 
 @Controller('menu-items')
+@UseGuards(SessionGuard)
 export class MenuItemsController {
   constructor(private readonly menuItemsService: MenuItemsService) {}
 
