@@ -4,6 +4,6 @@ import { Injectable } from '@nestjs/common';
 export class AppService {
   ping(): string {
     // TODO > ping response
-    return;
+    return 'ok';
   }
 }

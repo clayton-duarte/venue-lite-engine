@@ -18,8 +18,8 @@ export class PasswordInterceptor implements NestInterceptor {
     return next.handle().pipe(
       map((doc: VenueDocument) => {
         const _doc = doc.toObject();
-        const { password, ...rest } = _doc;
-        return rest;
+        const { password, ...safeData } = _doc;
+        return safeData;
       }),
     );
   }
