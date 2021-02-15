@@ -3,10 +3,10 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class MenuItem {
-  @Prop()
+  @Prop({ required: true })
   label: string;
 
-  @Prop()
+  @Prop({ required: true })
   price: string;
 }
 
