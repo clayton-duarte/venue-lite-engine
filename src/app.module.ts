@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { Module } from '@nestjs/common';
 
+import { MenuItemsModule } from './menu-items/menu-items.module';
+import { UserModule } from './user/user.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UserModule } from './user/user.module';
       envFilePath: ['.env.local', '.env'],
     }),
     MongooseModule.forRoot(`${process.env.MONGO_URL}/${process.env.MONGO_DB}`),
+    MenuItemsModule,
     UserModule,
   ],
   controllers: [AppController],

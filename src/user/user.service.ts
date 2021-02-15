@@ -35,7 +35,7 @@ export class UserService {
     const registeredUser = await createUser.save();
 
     session.userId = registeredUser.id;
-    return HttpStatus.OK;
+    return;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
@@ -48,12 +48,12 @@ export class UserService {
     }
 
     await this.userModel.updateOne({ _id: id }, updateUserDto).exec();
-    return HttpStatus.OK;
+    return;
   }
 
   async delete(id: string) {
     await this.userModel.deleteOne({ _id: id }).exec();
-    return HttpStatus.OK;
+    return;
   }
 
   async signIn(
@@ -71,16 +71,19 @@ export class UserService {
     }
 
     session.userId = registeredUser.id;
-    return HttpStatus.OK;
+    return;
   }
 
   async signOut(@Session() session: Request['session']) {
     session.destroy((err) => {
       if (err != null) {
-        throw new HttpException(err, HttpStatus.SERVICE_UNAVAILABLE);
+        throw new HttpException(
+          JSON.stringify(err),
+          HttpStatus.SERVICE_UNAVAILABLE,
+        );
       }
     });
 
-    return HttpStatus.OK;
+    return;
   }
 }

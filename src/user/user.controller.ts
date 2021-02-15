@@ -42,7 +42,7 @@ export class UserController {
 
   @Delete()
   @UseGuards(SessionGuard)
-  remove(@Req() req: Request) {
+  delete(@Req() req: Request) {
     return this.userService.delete(req.session.userId);
   }
 
