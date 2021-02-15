@@ -8,6 +8,7 @@ import {
   Get,
 } from '@nestjs/common';
 
+import { FormatCurrencyPipe } from './pipes/format-currency.pipe';
 import { CreateMenuItemDto } from './dto/create-menu-item.dto';
 import { UpdateMenuItemDto } from './dto/update-menu-item.dto';
 import { MenuItemsService } from './menu-items.service';
@@ -27,14 +28,14 @@ export class MenuItemsController {
   }
 
   @Post()
-  create(@Body() createMenuItemDto: CreateMenuItemDto) {
+  create(@Body(new FormatCurrencyPipe()) createMenuItemDto: CreateMenuItemDto) {
     return this.menuItemsService.create(createMenuItemDto);
   }
 
   @Put(':id')
   update(
     @Param('id') id: string,
-    @Body() updateMenuItemDto: UpdateMenuItemDto,
+    @Body(new FormatCurrencyPipe()) updateMenuItemDto: UpdateMenuItemDto,
   ) {
     return this.menuItemsService.update(id, updateMenuItemDto);
   }
