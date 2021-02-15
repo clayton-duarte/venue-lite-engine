@@ -12,6 +12,7 @@ import {
 import { Request } from 'express';
 
 import { PasswordInterceptor } from './interceptors/password.interceptor';
+import { CompleteVenueDto } from './dto/complete-venue.dto';
 import { CreateVenueDto } from './dto/create-venue.dto';
 import { UpdateVenueDto } from './dto/update-venue.dto';
 import { SignInVenueDto } from './dto/signin-venue.dto';
@@ -19,12 +20,12 @@ import { VenueService } from './venue.service';
 import { SessionGuard } from '../app.guard';
 
 @Controller('venue')
+@UseInterceptors(PasswordInterceptor)
 export class VenueController {
   constructor(private readonly venueService: VenueService) {}
 
   @Get()
   @UseGuards(SessionGuard)
-  @UseInterceptors(PasswordInterceptor)
   findOne(@Req() req: Request) {
     return this.venueService.findOneById(req.session.userId);
   }
@@ -38,6 +39,12 @@ export class VenueController {
   @UseGuards(SessionGuard)
   update(@Body() updateVenueDto: UpdateVenueDto, @Req() req: Request) {
     return this.venueService.update(req.session.userId, updateVenueDto);
+  }
+
+  @Put('onboard')
+  @UseGuards(SessionGuard)
+  onboard(@Body() completeVenueDto: CompleteVenueDto, @Req() req: Request) {
+    return this.venueService.onboard(req.session.userId, completeVenueDto);
   }
 
   @Delete()

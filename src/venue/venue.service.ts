@@ -4,6 +4,7 @@ import { Request } from 'express';
 import { Model } from 'mongoose';
 
 import { Venue, VenueDocument } from './schemas/venue.schema';
+import { CompleteVenueDto } from './dto/complete-venue.dto';
 import { SignInVenueDto } from './dto/signin-venue.dto';
 import { CreateVenueDto } from './dto/create-venue.dto';
 import { UpdateVenueDto } from './dto/update-venue.dto';
@@ -37,7 +38,7 @@ export class VenueService {
     const registeredVenue = await createVenue.save();
 
     session.userId = registeredVenue.id;
-    return registeredVenue.id;
+    return registeredVenue;
   }
 
   async update(id: string, updateVenueDto: UpdateVenueDto) {
@@ -52,6 +53,10 @@ export class VenueService {
     return this.venueModel
       .findByIdAndUpdate(id, updateVenueDto, { new: true })
       .exec();
+  }
+
+  async onboard(id: string, completeVenueDto: CompleteVenueDto) {
+    return this.update(id, completeVenueDto);
   }
 
   remove(id: string) {
@@ -73,7 +78,7 @@ export class VenueService {
     }
 
     session.userId = registeredVenue.id;
-    return registeredVenue.id;
+    return registeredVenue;
   }
 
   signOut(@Session() session: Request['session']) {

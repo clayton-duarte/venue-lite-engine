@@ -7,23 +7,19 @@ import {
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { VenueDocument } from '../schemas/venue.schema';
+import { VenueDocument, Venue } from '../schemas/venue.schema';
 
 @Injectable()
 export class PasswordInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,
     next: CallHandler,
-  ): Observable<{
-    id: string;
-    email: string;
-  }> {
+  ): Observable<Omit<Venue, 'password'>> {
     return next.handle().pipe(
       map((doc: VenueDocument) => {
-        return {
-          id: doc.id,
-          email: doc.email,
-        };
+        const _doc = doc.toObject();
+        const { password, ...rest } = _doc;
+        return rest;
       }),
     );
   }

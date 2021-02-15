@@ -10,7 +10,31 @@ export class Venue {
   password: string;
 
   @Prop()
-  name = '';
+  restaurantName: string;
+
+  @Prop()
+  address: string;
+
+  @Prop()
+  city: string;
+
+  @Prop()
+  provState: string;
+
+  @Prop()
+  postalZip: string;
+
+  @Prop()
+  country: string;
+
+  @Prop()
+  currency: string;
+
+  @Prop()
+  locale: string;
+
+  @Prop()
+  timeZone: string;
 }
 
 export type VenueDocument = Venue & Document;
