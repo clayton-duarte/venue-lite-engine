@@ -30,8 +30,8 @@ export class MenuGroupsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.menuGroupsService.findOne(id);
+  findById(@Param('id') id: string) {
+    return this.menuGroupsService.findById(id);
   }
 
   @Put(':id')
@@ -43,7 +43,7 @@ export class MenuGroupsController {
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.menuGroupsService.delete(id);
+  remove(@Param('id') id: string) {
+    return this.menuGroupsService.remove(id);
   }
 }

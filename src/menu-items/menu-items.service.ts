@@ -16,23 +16,22 @@ export class MenuItemsService {
     return this.menuItemModel.find().exec();
   }
 
-  findOne(id: string) {
-    return this.menuItemModel.findOne({ _id: id }).exec();
+  findById(id: string) {
+    return this.menuItemModel.findById(id).exec();
   }
 
-  async create(createMenuItemDto: CreateMenuItemDto) {
+  create(createMenuItemDto: CreateMenuItemDto) {
     const createUser = new this.menuItemModel(createMenuItemDto);
-    await createUser.save();
-    return;
+    return createUser.save();
   }
 
-  async update(id: string, updateMenuItemDto: UpdateMenuItemDto) {
-    await this.menuItemModel.updateOne({ _id: id }, updateMenuItemDto).exec();
-    return;
+  update(id: string, updateMenuItemDto: UpdateMenuItemDto) {
+    return this.menuItemModel
+      .findByIdAndUpdate(id, updateMenuItemDto, { new: true })
+      .exec();
   }
 
-  async delete(id: string) {
-    await this.menuItemModel.deleteOne({ _id: id }).exec();
-    return;
+  remove(id: string) {
+    return this.menuItemModel.findByIdAndRemove(id).exec();
   }
 }

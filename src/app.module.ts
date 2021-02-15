@@ -13,7 +13,9 @@ import { MenuGroupsModule } from './menu-groups/menu-groups.module';
     ConfigModule.forRoot({
       envFilePath: ['.env.local', '.env'],
     }),
-    MongooseModule.forRoot(`${process.env.MONGO_URL}/${process.env.MONGO_DB}`),
+    MongooseModule.forRoot(`${process.env.MONGO_URL}/${process.env.MONGO_DB}`, {
+      useFindAndModify: false,
+    }),
     MenuItemsModule,
     UserModule,
     MenuGroupsModule,

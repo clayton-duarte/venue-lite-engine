@@ -17,7 +17,7 @@ export class UserService {
   }
 
   findOneById(id: string) {
-    return this.userModel.findOne({ _id: id }).exec();
+    return this.userModel.findById(id).exec();
   }
 
   async create(
@@ -35,7 +35,7 @@ export class UserService {
     const registeredUser = await createUser.save();
 
     session.userId = registeredUser.id;
-    return;
+    return registeredUser.id;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
@@ -47,13 +47,13 @@ export class UserService {
       throw new HttpException('Email already registered', HttpStatus.CONFLICT);
     }
 
-    await this.userModel.updateOne({ _id: id }, updateUserDto).exec();
-    return;
+    return this.userModel
+      .findByIdAndUpdate(id, updateUserDto, { new: true })
+      .exec();
   }
 
-  async delete(id: string) {
-    await this.userModel.deleteOne({ _id: id }).exec();
-    return;
+  remove(id: string) {
+    return this.userModel.findByIdAndRemove(id).exec();
   }
 
   async signIn(
@@ -71,11 +71,11 @@ export class UserService {
     }
 
     session.userId = registeredUser.id;
-    return;
+    return registeredUser.id;
   }
 
-  async signOut(@Session() session: Request['session']) {
-    session.destroy((err) => {
+  signOut(@Session() session: Request['session']) {
+    return session.destroy((err) => {
       if (err != null) {
         throw new HttpException(
           JSON.stringify(err),
@@ -83,7 +83,5 @@ export class UserService {
         );
       }
     });
-
-    return;
   }
 }

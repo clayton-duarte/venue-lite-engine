@@ -14,26 +14,26 @@ export class MenuGroupsService {
   ) {}
 
   findAll() {
-    return this.menuGroupModel.find().exec();
+    return this.menuGroupModel.find().populate('menuItems').exec();
   }
 
-  findOne(id: string) {
-    return this.menuGroupModel.findOne({ _id: id }).exec();
+  findById(id: string) {
+    return this.menuGroupModel.findById(id).populate('menuItems').exec();
   }
 
-  async create(createMenuGroupDto: CreateMenuGroupDto) {
+  create(createMenuGroupDto: CreateMenuGroupDto) {
     const createUser = new this.menuGroupModel(createMenuGroupDto);
-    await createUser.save();
-    return;
+    return createUser.save();
   }
 
-  async update(id: string, updateMenuGroupDto: UpdateMenuGroupDto) {
-    await this.menuGroupModel.updateOne({ _id: id }, updateMenuGroupDto).exec();
-    return;
+  update(id: string, updateMenuGroupDto: UpdateMenuGroupDto) {
+    return this.menuGroupModel
+      .findByIdAndUpdate(id, updateMenuGroupDto, { new: true })
+      .populate('menuItems')
+      .exec();
   }
 
-  async delete(id: string) {
-    await this.menuGroupModel.deleteOne({ _id: id }).exec();
-    return;
+  remove(id: string) {
+    return this.menuGroupModel.findByIdAndRemove(id).exec();
   }
 }

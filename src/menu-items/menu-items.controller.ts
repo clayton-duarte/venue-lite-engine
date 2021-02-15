@@ -26,8 +26,8 @@ export class MenuItemsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.menuItemsService.findOne(id);
+  findById(@Param('id') id: string) {
+    return this.menuItemsService.findById(id);
   }
 
   @Post()
@@ -44,7 +44,7 @@ export class MenuItemsController {
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.menuItemsService.delete(id);
+  remove(@Param('id') id: string) {
+    return this.menuItemsService.remove(id);
   }
 }
