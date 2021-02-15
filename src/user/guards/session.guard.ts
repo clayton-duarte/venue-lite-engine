@@ -6,7 +6,7 @@ export class SessionGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const request = context.switchToHttp().getRequest();
-    return request.session.user != null;
+    const req = context.switchToHttp().getRequest();
+    return req.session.userId != null;
   }
 }
