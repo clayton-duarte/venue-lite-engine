@@ -18,3 +18,11 @@ export class MenuGroup {
 export type MenuGroupDocument = MenuGroup & Document;
 
 export const MenuGroupSchema = SchemaFactory.createForClass(MenuGroup);
+
+MenuGroupSchema.set('toJSON', {
+  transform: function (doc, ret) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  },
+});

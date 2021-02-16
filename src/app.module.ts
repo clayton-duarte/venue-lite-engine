@@ -16,9 +16,9 @@ import { AppService } from './app.service';
     MongooseModule.forRoot(`${process.env.MONGO_URL}/${process.env.MONGO_DB}`, {
       useFindAndModify: false,
     }),
+    MenuGroupsModule,
     MenuItemsModule,
     VenueModule,
-    MenuGroupsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

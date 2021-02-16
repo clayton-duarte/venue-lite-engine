@@ -13,11 +13,11 @@ import { Request } from 'express';
 
 import { PasswordInterceptor } from './interceptors/password.interceptor';
 import { CompleteVenueDto } from './dto/complete-venue.dto';
+import { SessionGuard } from '../../guards/session.guard';
 import { CreateVenueDto } from './dto/create-venue.dto';
 import { UpdateVenueDto } from './dto/update-venue.dto';
 import { SignInVenueDto } from './dto/signin-venue.dto';
 import { VenueService } from './venue.service';
-import { SessionGuard } from '../../guards/session.guard';
 
 @Controller('venue')
 @UseInterceptors(PasswordInterceptor)

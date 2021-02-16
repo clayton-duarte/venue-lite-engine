@@ -40,3 +40,11 @@ export class Venue {
 export type VenueDocument = Venue & Document;
 
 export const VenueSchema = SchemaFactory.createForClass(Venue);
+
+VenueSchema.set('toObject', {
+  transform: function (doc, ret) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  },
+});

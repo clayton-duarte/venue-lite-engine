@@ -13,3 +13,11 @@ export class MenuItem {
 export type MenuItemDocument = MenuItem & Document;
 
 export const MenuItemSchema = SchemaFactory.createForClass(MenuItem);
+
+MenuItemSchema.set('toJSON', {
+  transform: function (doc, ret) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  },
+});
