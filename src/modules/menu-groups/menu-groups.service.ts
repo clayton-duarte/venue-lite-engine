@@ -1,4 +1,5 @@
 import { InjectModel } from '@nestjs/mongoose';
+import { SessionData } from 'express-session';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
@@ -13,27 +14,46 @@ export class MenuGroupsService {
     private menuGroupModel: Model<MenuGroupDocument>,
   ) {}
 
-  findAll() {
-    return this.menuGroupModel.find().populate('menuItems').exec();
-  }
-
-  findById(id: string) {
-    return this.menuGroupModel.findById(id).populate('menuItems').exec();
-  }
-
-  create(createMenuGroupDto: CreateMenuGroupDto) {
-    const createMenuGroup = new this.menuGroupModel(createMenuGroupDto);
-    return createMenuGroup.save();
-  }
-
-  update(id: string, updateMenuGroupDto: UpdateMenuGroupDto) {
+  findAll(session: SessionData) {
     return this.menuGroupModel
-      .findByIdAndUpdate(id, updateMenuGroupDto, { new: true })
+      .where({ venueId: session.venueId })
+      .find()
       .populate('menuItems')
       .exec();
   }
 
-  remove(id: string) {
-    return this.menuGroupModel.findByIdAndRemove(id).exec();
+  findById(id: string, session: SessionData) {
+    return this.menuGroupModel
+      .where({ _id: id, venueId: session.venueId })
+      .findOne()
+      .populate('menuItems')
+      .exec();
+  }
+
+  create(createMenuGroupDto: CreateMenuGroupDto, session: SessionData) {
+    const createMenuGroup = new this.menuGroupModel({
+      ...createMenuGroupDto,
+      venueId: session.venueId,
+    });
+    return createMenuGroup.save();
+  }
+
+  update(
+    id: string,
+    updateMenuGroupDto: UpdateMenuGroupDto,
+    session: SessionData,
+  ) {
+    return this.menuGroupModel
+      .where({ _id: id, venueId: session.venueId })
+      .findOneAndUpdate({}, updateMenuGroupDto, { new: true })
+      .populate('menuItems')
+      .exec();
+  }
+
+  remove(id: string, session: SessionData) {
+    return this.menuGroupModel
+      .where({ _id: id, venueId: session.venueId })
+      .findOneAndDelete()
+      .exec();
   }
 }

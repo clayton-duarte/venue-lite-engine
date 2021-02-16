@@ -37,7 +37,7 @@ export class VenueService {
     const createVenue = new this.venueModel(createVenueDto);
     const registeredVenue = await createVenue.save();
 
-    session.userId = registeredVenue.id;
+    session.venueId = registeredVenue.id;
     return registeredVenue;
   }
 
@@ -77,7 +77,7 @@ export class VenueService {
       throw new HttpException('Wrong password', HttpStatus.FORBIDDEN);
     }
 
-    session.userId = registeredVenue.id;
+    session.venueId = registeredVenue.id;
     return registeredVenue;
   }
 

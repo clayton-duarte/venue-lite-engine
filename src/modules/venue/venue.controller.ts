@@ -27,7 +27,7 @@ export class VenueController {
   @Get()
   @UseGuards(SessionGuard)
   findOne(@Req() req: Request) {
-    return this.venueService.findOneById(req.session.userId);
+    return this.venueService.findOneById(req.session.venueId);
   }
 
   @Post()
@@ -38,19 +38,19 @@ export class VenueController {
   @Put()
   @UseGuards(SessionGuard)
   update(@Body() updateVenueDto: UpdateVenueDto, @Req() req: Request) {
-    return this.venueService.update(req.session.userId, updateVenueDto);
+    return this.venueService.update(req.session.venueId, updateVenueDto);
   }
 
   @Put('onboard')
   @UseGuards(SessionGuard)
   onboard(@Body() completeVenueDto: CompleteVenueDto, @Req() req: Request) {
-    return this.venueService.onboard(req.session.userId, completeVenueDto);
+    return this.venueService.onboard(req.session.venueId, completeVenueDto);
   }
 
   @Delete()
   @UseGuards(SessionGuard)
   remove(@Req() req: Request) {
-    return this.venueService.remove(req.session.userId);
+    return this.venueService.remove(req.session.venueId);
   }
 
   @Post('signin')

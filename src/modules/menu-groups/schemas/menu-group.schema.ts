@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, SchemaTypes } from 'mongoose';
 
 import { MenuItem } from '../../menu-items/schemas/menu-item.schema';
+import { Venue } from '../../venue/schemas/venue.schema';
 
 @Schema()
 export class MenuGroup {
@@ -13,6 +14,9 @@ export class MenuGroup {
 
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'MenuItem' }] })
   menuItems: MenuItem[];
+
+  @Prop({ required: true, type: SchemaTypes.ObjectId, ref: 'Venue' })
+  venueId: Venue;
 }
 
 export type MenuGroupDocument = MenuGroup & Document;

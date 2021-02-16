@@ -7,7 +7,7 @@ import { AppModule } from './app.module';
 
 declare module 'express-session' {
   export interface SessionData {
-    userId: string;
+    venueId: string;
   }
 }
 

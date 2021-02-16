@@ -1,4 +1,5 @@
 import { InjectModel } from '@nestjs/mongoose';
+import { SessionData } from 'express-session';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
@@ -12,26 +13,40 @@ export class MenuItemsService {
     @InjectModel(MenuItem.name) private menuItemModel: Model<MenuItemDocument>,
   ) {}
 
-  findAll() {
-    return this.menuItemModel.find().exec();
+  findAll(session: SessionData) {
+    return this.menuItemModel.where({ venueId: session.venueId }).find().exec();
   }
 
-  findById(id: string) {
-    return this.menuItemModel.findById(id).exec();
-  }
-
-  create(createMenuItemDto: CreateMenuItemDto) {
-    const createMenuItem = new this.menuItemModel(createMenuItemDto);
-    return createMenuItem.save();
-  }
-
-  update(id: string, updateMenuItemDto: UpdateMenuItemDto) {
+  findById(id: string, session: SessionData) {
     return this.menuItemModel
-      .findByIdAndUpdate(id, updateMenuItemDto, { new: true })
+      .where({ _id: id, venueId: session.venueId })
+      .findOne()
       .exec();
   }
 
-  remove(id: string) {
-    return this.menuItemModel.findByIdAndRemove(id).exec();
+  create(createMenuItemDto: CreateMenuItemDto, session: SessionData) {
+    const createMenuItem = new this.menuItemModel({
+      ...createMenuItemDto,
+      venueId: session.venueId,
+    });
+    return createMenuItem.save();
+  }
+
+  update(
+    id: string,
+    updateMenuItemDto: UpdateMenuItemDto,
+    session: SessionData,
+  ) {
+    return this.menuItemModel
+      .where({ _id: id, venueId: session.venueId })
+      .findOneAndUpdate({}, updateMenuItemDto, { new: true })
+      .exec();
+  }
+
+  remove(id: string, session: SessionData) {
+    return this.menuItemModel
+      .where({ _id: id, venueId: session.venueId })
+      .findOneAndRemove()
+      .exec();
   }
 }
