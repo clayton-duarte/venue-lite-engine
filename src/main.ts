@@ -3,6 +3,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as session from 'express-session';
 
+import { EmptyResponseInterceptor } from './interceptors/empty-response.interceptor';
 import { AppModule } from './app.module';
 
 declare module 'express-session' {
@@ -23,6 +24,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 
+  app.useGlobalInterceptors(new EmptyResponseInterceptor());
   app.useGlobalPipes(new ValidationPipe());
 
   app.use(
